@@ -1,5 +1,5 @@
 var nameVar = 'Andrew';
-nameVar = 'Poop';
+nameVar = 'Mike';
 console.log('nameVar', nameVar);
 
 let nameLet = 'Jen';
@@ -9,10 +9,15 @@ console.log('nameLet', nameLet);
 const nameConst = 'Frank';
 console.log('nameConst', nameConst);
 
-function getPetName() {
-    var petName = 'Hal';
-    return petName;
+
+//Block Scoping
+const fullName = 'Andrew Mead';
+let firstName;
+
+if (fullName) {
+    firstName = fullName.split(' ')[0];
+    console.log(firstName);
 }
 
-getPetName();
-console.log(PetName);
+//Not a function, just an if statement
+console.log(firstName);
