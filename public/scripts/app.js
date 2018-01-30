@@ -1,43 +1,67 @@
 'use strict';
 
-// arguments object - no longer bound with arrow functions. If you try to access arguments, it will no longer work.
+console.log('app.js is running');
 
-var add = function add(a, b) {
-    // console.log(arguments);
-    return a + b;
+//JSX
+
+var app = {
+    title: 'Indecision app',
+    subtitle: 'Poopy',
+    options: ['One', 'Two']
 };
 
-console.log(add(55, 1, 1001));
+var template = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        'p',
+        null,
+        app.subtitle
+    ),
+    React.createElement(
+        'p',
+        null,
+        app.options.length > 0 ? 'Here are your options' : 'No options'
+    ),
+    React.createElement(
+        'p',
+        null,
+        app.options
+    ),
+    React.createElement(
+        'ol',
+        null,
+        React.createElement(
+            'li',
+            null,
+            'Item one'
+        ),
+        React.createElement(
+            'li',
+            null,
+            'Item two'
+        )
+    )
+);
 
-// this keyword - no longer bound with arrow functions. 
+var count = 0;
 
-var user = {
-    name: 'Andrew',
-    cities: ['Philadelphia, New York, Dublin'],
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
+var templateTwo = React.createElement(
+    'div',
+    null,
+    React.createElement(
+        'h1',
+        null,
+        'Count: ',
+        count
+    )
+);
 
-        return this.cities.map(function (city) {
-            return _this.name + ' has lived in ' + city;
-        });
-        // this.cities.forEach((city) => {
-        //     console.log(this.name + ' has lived in ' + city);
-        // });
-    }
-};
-// user.printPlacesLived();
-console.log(user.printPlacesLived());
+var appRoot = document.getElementById('app');
 
-var multiplier = {
-    numbers: [10, 20, 30],
-    multiplyBy: 3,
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.numbers.map(function (number) {
-            return number * _this2.multiplyBy;
-        });
-    }
-};
-
-console.log(multiplier.multiply());
+ReactDOM.render(templateTwo, appRoot);
