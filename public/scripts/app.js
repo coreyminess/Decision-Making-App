@@ -1,46 +1,112 @@
 'use strict';
 
-var app = {
-    title: "Visibility Toggle",
-    text: '',
-    state: true
-};
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var appRoot = document.getElementById('app');
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var changeState = function changeState() {
-    if (app.state) {
-        app.state = false;
-        app.text = 'Those are some details!';
-        renderApp();
-    } else {
-        app.state = true;
-        app.text = '', renderApp();
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//second optional item to constructor function to take name and age (default to 0)
+//setup brand new method, called getDescription - going to return string, similar to getGreeting, but also take into account age - Corey M is 28 years old.
+
+var Person = function () {
+    function Person() {
+        var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Anonymous';
+        var age = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+        _classCallCheck(this, Person);
+
+        this.name = name;
+        this.age = age;
     }
-};
 
-var renderApp = function renderApp() {
-    var template = React.createElement(
-        'div',
-        null,
-        React.createElement(
-            'h1',
-            null,
-            app.title
-        ),
-        React.createElement(
-            'button',
-            { onClick: changeState },
-            app.state ? 'Show details' : 'Hide details',
-            '>'
-        ),
-        React.createElement(
-            'p',
-            null,
-            app.text
-        )
-    );
-    ReactDOM.render(template, appRoot);
-};
+    _createClass(Person, [{
+        key: 'getGreeting',
+        value: function getGreeting() {
+            return 'Hi. I am ' + this.name + '!';
+        }
+    }, {
+        key: 'getDescription',
+        value: function getDescription() {
+            return this.name + ' is ' + this.age + ' year(s) old.';
+        }
+    }]);
 
-renderApp();
+    return Person;
+}();
+
+var Student = function (_Person) {
+    _inherits(Student, _Person);
+
+    function Student(name, age, major) {
+        _classCallCheck(this, Student);
+
+        var _this = _possibleConstructorReturn(this, (Student.__proto__ || Object.getPrototypeOf(Student)).call(this, name, age));
+
+        _this.major = major;
+        return _this;
+    }
+
+    _createClass(Student, [{
+        key: 'hasMajor',
+        value: function hasMajor() {
+            return !!this.major;
+        }
+    }, {
+        key: 'getDescription',
+        value: function getDescription() {
+            var description = _get(Student.prototype.__proto__ || Object.getPrototypeOf(Student.prototype), 'getDescription', this).call(this);
+
+            if (this.hasMajor()) {
+                description += ' Their major is ' + this.major + '.';
+            }
+            return description;
+        }
+    }]);
+
+    return Student;
+}(Person);
+
+var Traveler = function (_Person2) {
+    _inherits(Traveler, _Person2);
+
+    function Traveler(name, age, homeLocation) {
+        _classCallCheck(this, Traveler);
+
+        var _this2 = _possibleConstructorReturn(this, (Traveler.__proto__ || Object.getPrototypeOf(Traveler)).call(this, name, age));
+
+        _this2.homeLocation = homeLocation;
+        return _this2;
+    }
+
+    _createClass(Traveler, [{
+        key: 'getGreeting',
+        value: function getGreeting() {
+            var greeting = _get(Traveler.prototype.__proto__ || Object.getPrototypeOf(Traveler.prototype), 'getGreeting', this).call(this);
+
+            if (this.homeLocation) {
+                greeting = greeting += ' I am visiting from ' + this.homeLocation + '.';
+            }
+
+            return greeting;
+        }
+    }]);
+
+    return Traveler;
+}(Person);
+
+// Challenge - Traveler will extend the Person class (need to set up new piece of info, similar to how we added major.)
+// Add support for homeLocation (third argument for the traveler)
+// Override getGreeting
+// 1. Hi. I am Andrew Mead. (Use Super method). I'm visiting from 'String / city'.
+// 2. If there is no home location, stick with parent string. Hi. I am Andrew Mead.
+
+var me = new Traveler('Corey M', 28, 'Oregon');
+console.log(me.getGreeting());
+
+var other = new Traveler(undefined, undefined, 'Nowhere');
+console.log(other.getGreeting());
