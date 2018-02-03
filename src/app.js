@@ -1,3 +1,14 @@
+const obj = {
+    name: 'Vikram',
+    getName() {
+        return this.name;
+    }
+};
+
+const getName = obj.getName.bind(obj);
+
+console.log(getName());
+
 class IndecisionApp extends React.Component {
     render() {
         const title = 'Indecision App';
@@ -27,19 +38,35 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
+    handlePick() {
+        alert('poopy boi')
+    }
+
     render() {
         return (
             <div>
-                <button>What should I do?</button>
+                <button onClick={this.handlePick}>What should I do?</button>
             </div>
         );
     }
 }
 
+// Add Remove All Button
 class Options extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    }
+
+    handleRemoveAll() {
+        console.log(this.props.options);
+        // alert('Poop poop poop')
+    }
+
     render() {
         return (
             <div>
+                <button onClick={this.handleRemoveAll}>Reset All</button>
                 {
                     this.props.options.map((option) => <Option key={option} optionText={option}/>)
                 }
@@ -58,16 +85,32 @@ class Option extends React.Component {
     }
 }
 
+
+// 1. Setup the form with text input and submit button - already have this form in jsx-indecision.js. Want to setup the exact same way
+// 2. Wire up the onSubmit - need to call method when form is submitted 
+// 3. Define the method we are going to wire up - handleAddOption -> fetch the value typed -> if value, then alert
+
 class AddOption extends React.Component {
+    handleAddOption(e) {
+        //prevent full page refresh
+        e.preventDefault();
+    
+        const option = e.target.elements.option.value.trim();
+    
+        if (option) {
+            alert(option);
+        }
+    }
+
     render() {
         return (
-            <div>
-               Test
-            </div>
+            <form onSubmit={this.handleAddOption}>
+                <input type ="text" name="option"/>
+                <button>Add Option</button>
+            </form>
         );
     }
 }
-
 
 
 ReactDOM.render(<IndecisionApp />, document.getElementById('app'));
