@@ -24,14 +24,19 @@ var IndecisionApp = function (_React$Component) {
     };
     return _this;
   }
+  // handleDeleteOptions() {
+  //   this.setState(() => {
+  //     return {
+  //       options: []
+  //     };
+  //   });
+  // }
 
   _createClass(IndecisionApp, [{
     key: 'handleDeleteOptions',
     value: function handleDeleteOptions() {
       this.setState(function () {
-        return {
-          options: []
-        };
+        return { options: [] };
       });
     }
   }, {
@@ -49,11 +54,8 @@ var IndecisionApp = function (_React$Component) {
       } else if (this.state.options.indexOf(option) > -1) {
         return 'This option already exists';
       }
-
       this.setState(function (prevState) {
-        return {
-          options: prevState.options.concat([option])
-        };
+        return { options: prevState.options.concat([option]) };
       });
     }
   }, {
@@ -210,4 +212,4 @@ var AddOption = function (_React$Component2) {
 // 	);
 // };
 
-ReactDOM.render(React.createElement(IndecisionApp, { options: ['Option one', 'Option two'] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
